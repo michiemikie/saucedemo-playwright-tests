@@ -36,9 +36,10 @@ def test_complete_purchase_journey(login_page: Page) -> None:
     login_page.get_by_role("combobox", name="Sort products").select_option("lohi")
     expect(login_page.get_by_test_id("inventory-item-price").first).to_have_text("$7.99")
 
-    login_page.get_by_role(
-        "button", name=f"View details for {ONESIE}"
-    ).last.click()
+    login_page.get_by_role("button", name=f"View details for {ONESIE}").last.click()
+    expect(login_page).to_have_url(re.compile(r"/inventory-item\.html"))
+    expect(login_page.locator(".inventory_details_name")).to_have_text(ONESIE)
+
     login_page.get_by_role("button", name="Add to cart").click()
     login_page.get_by_role("button", name="Back to products").click()
 
