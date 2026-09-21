@@ -43,6 +43,9 @@ def test_complete_purchase_journey(login_page: Page) -> None:
     login_page.get_by_role("button", name="Add to cart").click()
     login_page.get_by_role("button", name="Back to products").click()
 
+    expect(login_page).to_have_url(INVENTORY_URL)
+    expect(login_page.get_by_test_id("inventory-item")).to_have_count(6)
+
     login_page.get_by_test_id("add-to-cart-sauce-labs-backpack").click()
     expect(login_page.get_by_test_id("shopping-cart-badge")).to_have_text("2")
 
