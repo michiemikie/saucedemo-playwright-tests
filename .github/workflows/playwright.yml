@@ -27,14 +27,16 @@ jobs:
           pip install -r requirements.txt
 
       - name: Ensure browsers are installed
-        run: python -m playwright install --with-deps
+        run: python -m playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: pytest --tracing=retain-on-failure
+        run: pytest
 
-      - name: Upload Playwright traces
+      - name: Upload test report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-traces
-          path: test-results/
+          name: playwright-report
+          path: reports/
+          retention-days: 30
+
